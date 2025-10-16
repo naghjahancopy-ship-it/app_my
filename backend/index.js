@@ -12,14 +12,33 @@ app.get('/products', async (req, res) => {
   res.json(products);
 });
 
-// Example route: Add product
+// Route to add a new product
 app.post('/products', async (req, res) => {
-  const { name, price, stock } = req.body;
-  await db.run('INSERT INTO products (name, price, stock) VALUES (?, ?, ?)', [name, price, stock]);
-  res.json({ message: 'Product added' });
+  const { name, quantity, purchase_price, sale_price } = req.body;
+  await db.run(
+    'INSERT INTO products (name, quantity, purchase_price, sale_price) VALUES (?, ?, ?, ?)',
+    [name, quantity, purchase_price, sale_price]
+  );
+  res.json({ message: 'Product added successfully' });
 });
 
-// Add more routes for services, customers, invoices...
+// Route to update a product
+app.put('/products/:id', async (req, res) => {
+  const { name, quantity, purchase_price, sale_price } = req.body;
+  const { id } = req.params;
+  await db.run(
+    'UPDATE products SET name = ?, quantity = ?, purchase_price = ?, sale_price = ? WHERE id = ?',
+    [name, quantity, purchase_price, sale_price, id]
+  );
+  res.json({ message: 'Product updated successfully' });
+});
+
+// Route to delete a product
+app.delete('/products/:id', async (req, res) => {
+  const { id } = req.params;
+  await db.run('DELETE FROM products WHERE id = ?', [id]);
+  res.json({ message: 'Product deleted successfully' });
+});
 
 app.listen(4000, () => {
   console.log('Backend running on http://localhost:4000');
