@@ -12,8 +12,9 @@ async function setup() {
     CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
-      price INTEGER,
-      stock INTEGER
+      quantity INTEGER,
+      purchase_price INTEGER,
+      sale_price INTEGER
     );
     CREATE TABLE IF NOT EXISTS services (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
